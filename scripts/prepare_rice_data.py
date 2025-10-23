@@ -7,14 +7,14 @@ import shutil
 
 def main(url, dataset):
     # download
-    # print(f'Download {url} ...')
-    # response = requests.get(url)
-    # with open(f'datasets/rice/{dataset}.zip', 'wb') as f:
-    #     f.write(response.content)
+    print(f'Download {url} ...')
+    response = requests.get(url)
+    with open(f'../datasets/rice/{dataset}.zip', 'wb') as f:
+        f.write(response.content)
 
-    # # unzip
-    # with zipfile.ZipFile(f'datasets/rice/{dataset}.zip', 'r') as zip_ref:
-    #     zip_ref.extractall(f'datasets/rice/{dataset}')
+    # unzip
+    with zipfile.ZipFile(f'../datasets/rice/{dataset}.zip', 'r') as zip_ref:
+        zip_ref.extractall(f'datasets/rice/{dataset}')
 
     # split datasets
     split_rice_datasets()
@@ -24,7 +24,7 @@ def split_rice_datasets():
     """为RICE1和RICE2数据集按8:2比例分割训练集和测试集"""
 
     for rice_dataset in ['RICE1', 'RICE2']:
-        base_path = f'datasets/rice/RICE_DATASET/{rice_dataset}'
+        base_path = f'../datasets/rice/RICE_DATASET/{rice_dataset}'
         cloud_path = os.path.join(base_path, 'cloud')
         label_path = os.path.join(base_path, 'label')
 
@@ -32,10 +32,10 @@ def split_rice_datasets():
             continue
 
         # 创建输出目录
-        train_cloud_path = f'datasets/rice/{rice_dataset}_train/cloud'
-        train_label_path = f'datasets/rice/{rice_dataset}_train/label'
-        test_cloud_path = f'datasets/rice/{rice_dataset}_test/cloud'
-        test_label_path = f'datasets/rice/{rice_dataset}_test/label'
+        train_cloud_path = f'../datasets/rice/{rice_dataset}_train/cloud'
+        train_label_path = f'../datasets/rice/{rice_dataset}_train/label'
+        test_cloud_path = f'../datasets/rice/{rice_dataset}_test/cloud'
+        test_label_path = f'../datasets/rice/{rice_dataset}_test/label'
 
         for path in [train_cloud_path, train_label_path, test_cloud_path, test_label_path]:
             os.makedirs(path, exist_ok=True)
@@ -75,8 +75,8 @@ def split_rice_datasets():
         if rice_dataset == 'RICE2':
             mask_path = os.path.join(base_path, 'mask')
             if os.path.exists(mask_path):
-                train_mask_path = f'datasets/rice/{rice_dataset}_train/mask'
-                test_mask_path = f'datasets/rice/{rice_dataset}_test/mask'
+                train_mask_path = f'../datasets/rice/{rice_dataset}_train/mask'
+                test_mask_path = f'../datasets/rice/{rice_dataset}_test/mask'
                 os.makedirs(train_mask_path, exist_ok=True)
                 os.makedirs(test_mask_path, exist_ok=True)
 
@@ -92,7 +92,7 @@ def split_rice_datasets():
 
 
 if __name__ == '__main__':
-    os.makedirs('datasets/rice', exist_ok=True)
+    os.makedirs('../datasets/rice', exist_ok=True)
 
     urls = [
         'https://cloud-removal-dataset.obs.cn-north-4.myhuaweicloud.com/RICE_DATASET.zip'  # 替换为实际URL

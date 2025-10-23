@@ -1,7 +1,7 @@
 # general settings
 name: BasicSR_rice
 model_type: ExampleModel
-scale: 4
+scale: 1
 num_gpu: 1  # set num_gpu: 0 for cpu mode
 manual_seed: 0
 
@@ -10,7 +10,8 @@ datasets:
   train:
     name: ExampleBSDS100
     type: RICEDataset
-    dataroot_gt: datasets/example/BSDS100
+    dataroot_gt: datasets/rice/RICE1_train/label
+    dataroot_lq: datasets/rice/RICE1_train/cloud
     io_backend:
       type: disk
 
@@ -28,17 +29,18 @@ datasets:
   val:
     name: ExampleSet5
     type: RICEDataset
-    dataroot_gt: datasets/example/Set5
+    dataroot_gt: datasets/rice/RICE1_test/label
+    dataroot_lq: datasets/rice/RICE1_test/cloud
     io_backend:
       type: disk
 
 # network structures
 network_g:
-  type: ExampleArch
+  type: CloudRemovalArch
   num_in_ch: 3
   num_out_ch: 3
   num_feat: 64
-  upscale: 4
+  upscale: 1
 
 
 # path
@@ -60,7 +62,7 @@ train:
     milestones: [50000]
     gamma: 0.5
 
-  total_iter: 100000
+  total_iter: 300
   warmup_iter: -1  # no warm up
 
   # losses

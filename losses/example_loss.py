@@ -23,4 +23,6 @@ class ExampleLoss(nn.Module):
             target (Tensor): of shape (N, C, H, W). Ground truth tensor.
             weight (Tensor, optional): of shape (N, C, H, W). Element-wise weights. Default: None.
         """
+        print(pred.shape)
+        print(target.shape)
         return self.loss_weight * F.l1_loss(pred, target, reduction='mean')
