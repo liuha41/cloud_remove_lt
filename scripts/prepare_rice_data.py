@@ -7,14 +7,14 @@ import shutil
 
 def main(url, dataset):
     # download
-    print(f'Download {url} ...')
-    response = requests.get(url)
-    with open(f'datasets/rice/{dataset}.zip', 'wb') as f:
-        f.write(response.content)
+    # print(f'Download {url} ...')
+    # response = requests.get(url)
+    # with open(f'datasets/rice/{dataset}.zip', 'wb') as f:
+    #     f.write(response.content)
 
-    # unzip
-    with zipfile.ZipFile(f'datasets/rice/{dataset}.zip', 'r') as zip_ref:
-        zip_ref.extractall(f'datasets/rice/{dataset}')
+    # # unzip
+    # with zipfile.ZipFile(f'datasets/rice/{dataset}.zip', 'r') as zip_ref:
+    #     zip_ref.extractall(f'datasets/rice/{dataset}')
 
     # split datasets
     split_rice_datasets()
@@ -24,7 +24,7 @@ def split_rice_datasets():
     """为RICE1和RICE2数据集按8:2比例分割训练集和测试集"""
 
     for rice_dataset in ['RICE1', 'RICE2']:
-        base_path = f'datasets/rice/{rice_dataset}'
+        base_path = f'datasets/rice/RICE_DATASET/{rice_dataset}'
         cloud_path = os.path.join(base_path, 'cloud')
         label_path = os.path.join(base_path, 'label')
 

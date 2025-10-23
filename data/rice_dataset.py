@@ -31,7 +31,7 @@ class RICEDataset(data.Dataset):
     """
 
     def __init__(self, opt):
-        super(ExampleDataset, self).__init__()
+        super(RICEDataset, self).__init__()
         self.opt = opt
         # file client (io backend)
         self.file_client = None
