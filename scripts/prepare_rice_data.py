@@ -92,7 +92,7 @@ def split_rice_datasets():
 
 
 if __name__ == '__main__':
-    os.makedirs('../datasets/rice', exist_ok=True)
+    os.makedirs('datasets/rice', exist_ok=True)
 
     urls = [
         'https://cloud-removal-dataset.obs.cn-north-4.myhuaweicloud.com/RICE_DATASET.zip'  # 替换为实际URL
