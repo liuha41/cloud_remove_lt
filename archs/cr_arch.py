@@ -1,5 +1,5 @@
 from torch import nn as nn
-from torch.nn import functional as F
+from torch.nn import functional as F # noqa: F401
 
 from basicsr.archs.arch_util import default_init_weights
 from basicsr.utils.registry import ARCH_REGISTRY

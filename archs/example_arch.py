@@ -39,7 +39,7 @@ class ExampleArch(nn.Module):
             [self.conv1, self.conv2, self.conv3, self.upconv1, self.upconv2, self.conv_hr, self.conv_last], 0.1)
 
     def forward(self, x):
-        print("X",x.shape)
+        print("X", x.shape)
         feat = self.lrelu(self.conv1(x))
         feat = self.lrelu(self.conv2(feat))
         feat = self.lrelu(self.conv3(feat))

@@ -47,7 +47,7 @@ def split_rice_datasets():
         # 创建文件对
         file_pairs = []
         for cloud_file in cloud_files:
-            cloud_name = os.path.splitext(cloud_file)[0]
+            # cloud_name = os.path.splitext(cloud_file)[0]
             label_file = cloud_file  # 假设同名
             if os.path.exists(os.path.join(label_path, label_file)):
                 file_pairs.append((cloud_file, label_file))
