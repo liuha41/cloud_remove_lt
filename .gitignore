@@ -1,4 +1,5 @@
 datasets/*
+.idea/*
 experiments/*
 results/*
 tb_logger/*
