@@ -9,11 +9,11 @@ def main(url, dataset):
     # download
     print(f'Download {url} ...')
     response = requests.get(url)
-    with open(f'../datasets/rice/{dataset}.zip', 'wb') as f:
+    with open(f'datasets/rice/{dataset}.zip', 'wb') as f:
         f.write(response.content)
 
     # unzip
-    with zipfile.ZipFile(f'../datasets/rice/{dataset}.zip', 'r') as zip_ref:
+    with zipfile.ZipFile(f'datasets/rice/{dataset}.zip', 'r') as zip_ref:
         zip_ref.extractall(f'datasets/rice/{dataset}')
 
     # split datasets
@@ -24,7 +24,7 @@ def split_rice_datasets():
     """为RICE1和RICE2数据集按8:2比例分割训练集和测试集"""
 
     for rice_dataset in ['RICE1', 'RICE2']:
-        base_path = f'../datasets/rice/RICE_DATASET/{rice_dataset}'
+        base_path = f'datasets/rice/RICE_DATASET/{rice_dataset}'
         cloud_path = os.path.join(base_path, 'cloud')
         label_path = os.path.join(base_path, 'label')
 
@@ -32,10 +32,10 @@ def split_rice_datasets():
             continue
 
         # 创建输出目录
-        train_cloud_path = f'../datasets/rice/{rice_dataset}_train/cloud'
-        train_label_path = f'../datasets/rice/{rice_dataset}_train/label'
-        test_cloud_path = f'../datasets/rice/{rice_dataset}_test/cloud'
-        test_label_path = f'../datasets/rice/{rice_dataset}_test/label'
+        train_cloud_path = f'datasets/rice/{rice_dataset}_train/cloud'
+        train_label_path = f'datasets/rice/{rice_dataset}_train/label'
+        test_cloud_path = f'datasets/rice/{rice_dataset}_test/cloud'
+        test_label_path = f'datasets/rice/{rice_dataset}_test/label'
 
         for path in [train_cloud_path, train_label_path, test_cloud_path, test_label_path]:
             os.makedirs(path, exist_ok=True)
@@ -47,7 +47,7 @@ def split_rice_datasets():
         # 创建文件对
         file_pairs = []
         for cloud_file in cloud_files:
-            # cloud_name = os.path.splitext(cloud_file)[0]
+            cloud_name = os.path.splitext(cloud_file)[0]
             label_file = cloud_file  # 假设同名
             if os.path.exists(os.path.join(label_path, label_file)):
                 file_pairs.append((cloud_file, label_file))
@@ -75,8 +75,8 @@ def split_rice_datasets():
         if rice_dataset == 'RICE2':
             mask_path = os.path.join(base_path, 'mask')
             if os.path.exists(mask_path):
-                train_mask_path = f'../datasets/rice/{rice_dataset}_train/mask'
-                test_mask_path = f'../datasets/rice/{rice_dataset}_test/mask'
+                train_mask_path = f'datasets/rice/{rice_dataset}_train/mask'
+                test_mask_path = f'datasets/rice/{rice_dataset}_test/mask'
                 os.makedirs(train_mask_path, exist_ok=True)
                 os.makedirs(test_mask_path, exist_ok=True)
 
