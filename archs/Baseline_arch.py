@@ -16,8 +16,8 @@ Simple Baselines for Image Restoration
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from arch_util import LayerNorm2d
-from local_arch import Local_Base
+from .arch_util import LayerNorm2d
+from .local_arch import Local_Base
 from basicsr.utils.registry import ARCH_REGISTRY
 
 class BaselineBlock(nn.Module):
