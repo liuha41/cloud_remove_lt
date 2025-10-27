@@ -92,6 +92,8 @@ class NAFBlockSR(nn.Module):
             feats = self.fusion(*feats)
         return feats
 
+
+@ARCH_REGISTRY.register()
 class NAFNetSR(nn.Module):
     '''
     NAFNet for Super-Resolution
@@ -130,7 +132,7 @@ class NAFNetSR(nn.Module):
         return out
 
 
-@ARCH_REGISTRY.register()
+
 class NAFSSR(Local_Base, NAFNetSR):
     def __init__(self, *args, train_size=(1, 6, 30, 90), fast_imp=False, fusion_from=-1, fusion_to=1000, **kwargs):
         Local_Base.__init__(self)
@@ -143,30 +145,30 @@ class NAFSSR(Local_Base, NAFNetSR):
         with torch.no_grad():
             self.convert(base_size=base_size, train_size=train_size, fast_imp=fast_imp)
 
-if __name__ == '__main__':
-    num_blks = 128
-    width = 128
-    droppath=0.1
-    train_size = (1, 6, 30, 90)
-
-    net = NAFSSR(up_scale=2,train_size=train_size, fast_imp=True, width=width, num_blks=num_blks, drop_path_rate=droppath)
-
-    inp_shape = (6, 64, 64)
-
-    from ptflops import get_model_complexity_info
-    FLOPS = 0
-    macs, params = get_model_complexity_info(net, inp_shape, verbose=False, print_per_layer_stat=True)
-
-    # params = float(params[:-4])
-    print(params)
-    macs = float(macs[:-4]) + FLOPS / 10 ** 9
-
-    print('mac', macs, params)
-
-    # from basicsr.models.archs.arch_util import measure_inference_speed
-    # net = net.cuda()
-    # data = torch.randn((1, 6, 128, 128)).cuda()
-    # measure_inference_speed(net, (data,))
+# if __name__ == '__main__':
+#     num_blks = 128
+#     width = 128
+#     droppath=0.1
+#     train_size = (1, 6, 30, 90)
+#
+#     net = NAFSSR(up_scale=2,train_size=train_size, fast_imp=True, width=width, num_blks=num_blks, drop_path_rate=droppath)
+#
+#     inp_shape = (6, 64, 64)
+#
+#     from ptflops import get_model_complexity_info
+#     FLOPS = 0
+#     macs, params = get_model_complexity_info(net, inp_shape, verbose=False, print_per_layer_stat=True)
+#
+#     # params = float(params[:-4])
+#     print(params)
+#     macs = float(macs[:-4]) + FLOPS / 10 ** 9
+#
+#     print('mac', macs, params)
+#
+#     # from basicsr.models.archs.arch_util import measure_inference_speed
+#     # net = net.cuda()
+#     # data = torch.randn((1, 6, 128, 128)).cuda()
+#     # measure_inference_speed(net, (data,))
 
 
 
