@@ -16,8 +16,8 @@ Simple Baselines for Image Restoration
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from basicsr.archs.arch_util import LayerNorm2d
-from basicsr.archs.local_arch import Local_Base
+from arch_util import LayerNorm2d
+from local_arch import Local_Base
 from basicsr.utils.registry import ARCH_REGISTRY
 
 class BaselineBlock(nn.Module):
@@ -28,7 +28,7 @@ class BaselineBlock(nn.Module):
         self.conv2 = nn.Conv2d(in_channels=dw_channel, out_channels=dw_channel, kernel_size=3, padding=1, stride=1, groups=dw_channel,
                                bias=True)
         self.conv3 = nn.Conv2d(in_channels=dw_channel, out_channels=c, kernel_size=1, padding=0, stride=1, groups=1, bias=True)
-        
+
         # Channel Attention
         self.se = nn.Sequential(
             nn.AdaptiveAvgPool2d(1),
