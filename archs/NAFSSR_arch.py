@@ -18,9 +18,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from basicsr.models.archs.NAFNet_arch import LayerNorm2d, NAFBlock
-from basicsr.models.archs.arch_util import MySequential
-from basicsr.models.archs.local_arch import Local_Base
+from basicsr.models.NAFNet_arch import LayerNorm2d, NAFBlock
+from basicsr.models.arch_util import MySequential
+from basicsr.models.local_arch import Local_Base
 from basicsr.utils.registry import ARCH_REGISTRY
 
 class SCAM(nn.Module):
