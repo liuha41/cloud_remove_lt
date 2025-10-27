@@ -18,7 +18,7 @@ class BRelu(nn.Hardtanh):
 
 @ARCH_REGISTRY.register()
 class DehazeNet(nn.Module):
-    def __init__(self, num_in_ch=3, num_out_ch=3, num_feat=64, upscale=4, input=16, groups=4):
+    def __init__(self, input=16, groups=4):
         super(DehazeNet, self).__init__()
         self.input = input
         self.groups = groups
