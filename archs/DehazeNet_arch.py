@@ -33,6 +33,9 @@ class DehazeNet(nn.Module):
         self.conv5 = nn.Conv2d(in_channels=48, out_channels=3, kernel_size=3, padding=1)  # 改为3x3卷积
         self.brelu = BRelu()
 
+        default_init_weights(
+            [self.conv1, self.conv2, self.conv3, self.conv4, self.maxpool, self.conv5], 0.1)
+
     def Maxout(self, x, groups):
         x = x.reshape(x.shape[0], groups, x.shape[1] // groups, x.shape[2], x.shape[3])
         x, _ = torch.max(x, dim=2, keepdim=True)
