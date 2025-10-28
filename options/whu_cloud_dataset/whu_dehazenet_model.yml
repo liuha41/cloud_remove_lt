@@ -10,8 +10,8 @@ datasets:
   train:
     name: WHUDataset
     type: WHUDataset
-    dataroot_gt: datasets/whu_cloud_dataset/cloud_detection/Train/masked
-    dataroot_lq: datasets/whu_cloud_dataset/cloud_detection/Train/temporal
+    dataroot_gt: datasets/whu_cloud_dataset/Train/masked
+    dataroot_lq: datasets/whu_cloud_dataset/Train/temporal
     io_backend:
       type: disk
 
@@ -29,8 +29,8 @@ datasets:
   val:
     name: WHUDataset
     type: WHUDataset
-    dataroot_gt: datasets/whu_cloud_dataset/cloud_detection/Val/masked
-    dataroot_lq: datasets/whu_cloud_dataset/cloud_detection/Val/temporal
+    dataroot_gt: datasets/whu_cloud_dataset/Val/masked
+    dataroot_lq: datasets/whu_cloud_dataset/Val/temporal
     io_backend:
       type: disk
 

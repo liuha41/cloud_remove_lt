@@ -7,18 +7,19 @@ def main(url, dataset):
     # download
     print(f'Download {url} ...')
     response = requests.get(url)
-    with open(f'datasets/whu_cloud_dataset/{dataset}.rar', 'wb') as f:
+    with open(f'datasets/{dataset}.zip', 'wb') as f:
         f.write(response.content)
 
-    with rarfile.RarFile(f'datasets/whu_cloud_dataset/{dataset}.rar', 'r') as rar_ref:
-        rar_ref.extractall(f'datasets/whu_cloud_dataset/{dataset}')
+    # unzip
+    import zipfile
+    with zipfile.ZipFile(f'datasets/{dataset}.zip', 'r') as zip_ref:
+        zip_ref.extractall(f'datasets/')
 
 
 if __name__ == '__main__':
-    os.makedirs('datasets/whu_cloud_dataset', exist_ok=True)
 
     urls = [
-        'https://cloud-removal-dataset.obs.cn-north-4.myhuaweicloud.com/cloud%20detection%20and%20removal%20dataset.rar'  # 替换为实际URL
+        'https://cloud-removal-dataset.obs.cn-north-4.myhuaweicloud.com/whu_cloud_dataset.zip'  # 替换为实际URL
     ]
     datasets = ['whu_cloud_dataset']
 
