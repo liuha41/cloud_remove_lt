@@ -40,8 +40,6 @@ network_g:
   img_channel: 3
   width: 32
   middle_blk_num: 1
-  enc_blks: [1, 1, 1, 28]
-  dec_blks: [1, 1, 1, 1]
 
 
 # path
