@@ -9,9 +9,11 @@ YML_FILES=(
     "rice1_dehazenet_model.yml"
     "rice1_nafnet_model.yml"
     "rice1_nafssr_model.yml"
+    "rice1_baseline_model.yml"
     "rice2_dehazenet_model.yml"
     "rice2_nafnet_model.yml"
     "rice2_nafssr_model.yml"
+    "rice2_baseline_model.yml"
 )
 
 # 遍历文件列表，依次执行

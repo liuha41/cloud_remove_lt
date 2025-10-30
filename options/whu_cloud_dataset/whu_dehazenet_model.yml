@@ -37,8 +37,6 @@ datasets:
 # network structures
 network_g:
   type: DehazeNet
-  input: 16
-  groups: 4
 
 
 # path
@@ -60,7 +58,7 @@ train:
     milestones: [50000]
     gamma: 0.5
 
-  total_iter: 30000
+  total_iter: 10000
   warmup_iter: -1  # no warm up
 
   # losses
@@ -75,7 +73,7 @@ train:
 
 # validation settings
 val:
-  val_freq: !!float 1e3
+  val_freq: !!float 2e3
   save_img: true
 
   metrics:

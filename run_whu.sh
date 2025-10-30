@@ -9,6 +9,7 @@ YML_FILES=(
     "whu_dehazenet_model.yml"
     "whu_nafnet_model.yml"
     "whu_nafssr_model.yml"
+    "whu_baseline_model.yml"
 )
 
 # 遍历文件列表，依次执行

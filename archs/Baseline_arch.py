@@ -174,31 +174,27 @@ class BaselineLocal(Local_Base, Baseline):
         with torch.no_grad():
             self.convert(base_size=base_size, train_size=train_size, fast_imp=fast_imp)
 
-if __name__ == '__main__':
-    img_channel = 3
-    width = 32
-
-    dw_expand = 1
-    ffn_expand = 2
-
-    # enc_blks = [2, 2, 4, 8]
-    # middle_blk_num = 12
-    # dec_blks = [2, 2, 2, 2]
-
-    enc_blks = [1, 1, 1, 28]
-    middle_blk_num = 1
-    dec_blks = [1, 1, 1, 1]
-
-    net = Baseline(img_channel=img_channel, width=width, middle_blk_num=middle_blk_num,
-                 enc_blk_nums=enc_blks, dec_blk_nums=dec_blks, dw_expand=dw_expand, ffn_expand=ffn_expand)
-
-    inp_shape = (3, 256, 256)
-
-    from ptflops import get_model_complexity_info
-
-    macs, params = get_model_complexity_info(net, inp_shape, verbose=False, print_per_layer_stat=False)
-
-    params = float(params[:-3])
-    macs = float(macs[:-4])
-
-    print(macs, params)
+# if __name__ == '__main__':
+#     img_channel = 3
+#     width = 32
+#
+#     dw_expand = 1
+#     ffn_expand = 2
+#
+#     enc_blks = [1, 1, 1, 28]
+#     middle_blk_num = 1
+#     dec_blks = [1, 1, 1, 1]
+#
+#     net = Baseline(img_channel=img_channel, width=width, middle_blk_num=middle_blk_num,
+#                  enc_blk_nums=enc_blks, dec_blk_nums=dec_blks, dw_expand=dw_expand, ffn_expand=ffn_expand)
+#
+#     inp_shape = (3, 256, 256)
+#
+#     from ptflops import get_model_complexity_info
+#
+#     macs, params = get_model_complexity_info(net, inp_shape, verbose=False, print_per_layer_stat=False)
+#
+#     params = float(params[:-3])
+#     macs = float(macs[:-4])
+#
+#     print(macs, params)
