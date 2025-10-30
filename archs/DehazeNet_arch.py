@@ -16,44 +16,57 @@ class BRelu(nn.Hardtanh):
         return inplace_str
 
 
-# 透射率估计器（作为内部组件）
 class TransmissionEstimator(nn.Module):
     def __init__(self, input=16, groups=4):
         super(TransmissionEstimator, self).__init__()
         self.input = input
         self.groups = groups
-        self.conv1 = nn.Conv2d(in_channels=3, out_channels=self.input, kernel_size=5)
-        self.conv2 = nn.Conv2d(in_channels=4, out_channels=16, kernel_size=3, padding=1)
-        self.conv3 = nn.Conv2d(in_channels=4, out_channels=16, kernel_size=5, padding=2)
-        self.conv4 = nn.Conv2d(in_channels=4, out_channels=16, kernel_size=7, padding=3)
-        self.maxpool = nn.MaxPool2d(kernel_size=7, stride=1)
-        self.conv5 = nn.Conv2d(in_channels=48, out_channels=1, kernel_size=6)
-        self.brelu = BRelu()  # 使用自定义的BRelu（修正原代码的nn.BReLU错误）
 
-        # 初始化卷积层参数
+        # 调整卷积和池化参数，确保最终输出为[B, 1]
+        self.features = nn.Sequential(
+            # 输入: [B, 3, H, W]
+            nn.Conv2d(3, self.input, kernel_size=5, stride=2),  # 缩小尺寸，减少计算量
+            nn.ReLU(),
+            # 经过Maxout后通道数变为 groups（原input=16，groups=4 → 16/4=4通道）
+            nn.Conv2d(groups, 32, kernel_size=3, padding=1, stride=2),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=3, stride=2),  # 进一步缩小尺寸
+            nn.Conv2d(32, 64, kernel_size=3, padding=1, stride=2),
+            nn.ReLU(),
+            nn.AdaptiveAvgPool2d((1, 1))  # 全局池化，固定输出为[B, 64, 1, 1]
+        )
+
+        # 最终通过全连接层输出1个值（透射率）
+        self.fc = nn.Linear(64, 1)
+        self.brelu = BRelu()  # 限制输出在0~1之间
+
+        # 初始化参数
         for m in self.modules():
-            if isinstance(m, nn.Conv2d):
+            if isinstance(m, (nn.Conv2d, nn.Linear)):
                 nn.init.normal_(m.weight, mean=0, std=0.001)
                 if m.bias is not None:
                     nn.init.constant_(m.bias, 0)
 
     def Maxout(self, x, groups):
-        # Maxout激活：按组取最大值
+        # Maxout激活：按组取最大值（将通道数压缩为groups）
         x = x.reshape(x.shape[0], groups, x.shape[1] // groups, x.shape[2], x.shape[3])
         x, _ = torch.max(x, dim=2, keepdim=True)
-        return x.reshape(x.shape[0], -1, x.shape[3], x.shape[4])
+        return x.reshape(x.shape[0], -1, x.shape[3], x.shape[4])  # 输出通道数=groups
 
     def forward(self, x):
-        out = self.conv1(x)
-        out = self.Maxout(out, self.groups)
-        out1 = self.conv2(out)
-        out2 = self.conv3(out)
-        out3 = self.conv4(out)
-        y = torch.cat((out1, out2, out3), dim=1)
-        y = self.maxpool(y)
-        y = self.conv5(y)
-        y = self.brelu(y)
-        return y.reshape(y.shape[0], -1)  # 返回[B, 1]形状的透射率初始估计
+        # x: [B, 3, H, W]
+        out = self.features[0](x)  # 第一层卷积: [B, input, H1, W1]
+        out = self.Maxout(out, self.groups)  # 通道数变为groups: [B, groups, H1, W1]
+
+        # 后续特征提取
+        for layer in self.features[1:]:  # 从ReLU开始执行剩余层
+            out = layer(out)
+
+        # 展平特征并通过全连接层输出透射率
+        out = out.view(out.shape[0], -1)  # [B, 64]
+        out = self.fc(out)  # [B, 1]
+        out = self.brelu(out)  # 限制在0~1之间
+        return out  # 输出形状: [B, 1]
 
 
 @ARCH_REGISTRY.register()
