@@ -41,7 +41,7 @@ network_g:
   width: 32
   middle_blk_num: 1
   enc_blk_nums: [1, 1, 1, 28]
-  dec_blks: [1, 1, 1, 1]
+  dec_blk_nums: [1, 1, 1, 1]
   dw_expand: 1
   ffn_expand: 2
 

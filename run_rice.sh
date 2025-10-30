@@ -8,11 +8,9 @@ LOG_PREFIX="log_"
 YML_FILES=(
     "rice1_dehazenet_model.yml"
     "rice1_nafnet_model.yml"
-    "rice1_nafssr_model.yml"
     "rice1_baseline_model.yml"
     "rice2_dehazenet_model.yml"
     "rice2_nafnet_model.yml"
-    "rice2_nafssr_model.yml"
     "rice2_baseline_model.yml"
 )
 
@@ -29,8 +27,8 @@ for yml in "${YML_FILES[@]}"; do
 
     # 检查是否是最后一个文件，不是则等待10分钟
     if [ "$yml" != "${YML_FILES[-1]}" ]; then
-        echo "$yml 执行完毕，等待10分钟后执行下一个..."
-        sleep 600  # 10分钟 = 600秒
+        echo "$yml 执行完毕，等待1分钟后执行下一个..."
+        sleep 60
     fi
 done
 
