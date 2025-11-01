@@ -1,3 +1,3 @@
 python "models/homomorphic_filter.py" "rice1" "datasets/rice/RICE1_test/cloud" "datasets/rice/RICE1_test/label" "experiments/rice1_homomorphic_filter/vis"
-python "models/homomorphic_filter.py" "rice2" "datasets/rice/RICE2_test/cloud" "datasets/rice/RICE2_test/label" "experiments/rice2_homomorphic_filter/vis"\
+python "models/homomorphic_filter.py" "rice2" "datasets/rice/RICE2_test/cloud" "datasets/rice/RICE2_test/label" "experiments/rice2_homomorphic_filter/vis"
 python "models/homomorphic_filter.py" "whu" "datasets/whu_cloud_dataset/Val/masked" "datasets/whu_cloud_dataset/Val/temporal" "experiments/whu_homomorphic_filter/vis"
