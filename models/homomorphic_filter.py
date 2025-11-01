@@ -145,3 +145,5 @@ if __name__ == "__main__":
     )
 
     process_images(cloud_dir, label_dir, save_dir)
+
+    print(dataset,cloud_dir,label_dir,save_dir,"执行完毕")
